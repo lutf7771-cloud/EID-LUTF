@@ -53,7 +53,7 @@
             font-weight: bold; 
         }
         
-        /* حاوية البطاقة - معبية الشاشة ومتناسقة */
+        /* حاوية البطاقة */
         .card-wrapper {
             display: none;
             width: 100%;
@@ -74,7 +74,7 @@
             box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
         
-        /* وزنية الاسم المضمونة في وسط المربع تماماً دون شطحات وبخط أسود */
+        /* ضبط موقع ولون ومقاس الاسم */
         #user-name-overlay {
             position: absolute !important;
             top: 70.3% !important; 
@@ -82,12 +82,21 @@
             transform: translate(-50%, -50%) !important;
             width: 50% !important;
             text-align: center !important;
-            font-size: 18px !important; 
             font-weight: bold !important;
-            color: #000000 !important; 
+            color: #000000 !important; /* أسود صريح */
             white-space: nowrap !important;
             direction: rtl !important;
             z-index: 99 !important;
+            
+            /* الحجم الافتراضي للجوالات (تم تصغيره ليكون ناعماً جداً) */
+            font-size: 13px !important; 
+        }
+        
+        /* إذا كان الجهاز آيباد أو شاشة أكبر، يكبر الخط قليلاً ليتناسق مع المساحة */
+        @media (min-width: 480px) {
+            #user-name-overlay {
+                font-size: 18px !important; 
+            }
         }
         
         /* الأزرار تحت الصورة تلقائياً */
@@ -145,27 +154,24 @@
                 document.getElementById('controls-area').style.display = 'block';
                 document.getElementById('user-name-overlay').innerText = name;
                 
-                // تشغيل تأثير الألعاب النارية الاحتفالية فوراً
+                // تشغيل تأثير الألعاب النارية الاحتفالية
                 launchFireworks();
             } else {
                 alert("يرجى كتابة الاسم أولاً");
             }
         }
 
-        // دالة إطلاق الألعاب النارية بشكل متكرر ومبهج
         function launchFireworks() {
-            var duration = 4 * 1000; // تستمر الألعاب النارية لمدة 4 ثوانٍ
+            var duration = 4 * 1000; 
             var end = Date.now() + duration;
 
             (function frame() {
-                // إطلاق من اليسار
                 confetti({
                     particleCount: 4,
                     angle: 60,
                     spread: 55,
                     origin: { x: 0, y: 0.8 }
                 });
-                // إطلاق من اليمين
                 confetti({
                     particleCount: 4,
                     angle: 120,
