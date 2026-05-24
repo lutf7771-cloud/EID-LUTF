@@ -3,58 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تهنئة فريق لطف</title>
+    <title>تهنئة فريق لطف التطوعي</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f4f8; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .input-box { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 400px; }
-        input { width: 85%; padding: 12px; margin: 20px 0; border: 2px solid #013441; border-radius: 8px; font-size: 16px; text-align: center; }
-        button { background-color: #013441; color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #f4f7f9; 
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            padding: 15px;
+            box-sizing: border-box;
+        }
         
-        #capture-area { position: relative; width: 100%; max-width: 500px; display: none; margin: 0 auto; }
-        .bg-img { width: 100%; display: block; border-radius: 10px; }
+        .input-box { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            text-align: center; 
+            width: 100%; 
+            max-width: 400px; 
+        }
         
-        /* التعديل الجذري: تصغير الخط باستخدام النسب المئوية المتجاوبة لجعل الخط ناعماً جداً */
+        input { 
+            width: 85%; 
+            padding: 12px; 
+            margin: 20px 0; 
+            border: 2px solid #013441; 
+            border-radius: 8px; 
+            font-size: 16px; 
+            text-align: center; 
+            outline: none; 
+        }
+        
+        button { 
+            background-color: #013441; 
+            color: white; 
+            border: none; 
+            padding: 12px 30px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            font-weight: bold; 
+        }
+        
+        /* حاوية البطاقة - معبية الشاشة ومتمركزة */
+        .card-wrapper {
+            display: none;
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        #capture-area { 
+            position: relative; 
+            width: 100%; 
+        }
+        
+        .bg-img { 
+            width: 100%; 
+            display: block; 
+            border-radius: 12px; 
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        /* وزنية الاسم المضمونة في السنتر وفي وسط المربع تماماً دون شطحات */
         #user-name-overlay {
             position: absolute !important;
-            top: 70.2% !important; 
+            top: 70.3% !important; 
             left: 50% !important;
             transform: translate(-50%, -50%) !important;
-            width: 45% !important;
+            width: 50% !important;
             text-align: center !important;
-            font-size: 3.5vw !important; /* مقياس ديناميكي ناعم جداً ليصغر داخل المربع */
+            font-size: 16px !important; /* مقاس ناعم وصغير للخط */
             font-weight: bold !important;
             color: #000000 !important; /* لون أسود صريح */
             white-space: nowrap !important;
-            z-index: 999 !important;
+            direction: rtl !important;
+            z-index: 99 !important;
         }
         
-        /* هذا الجزء يضمن ثبات المقاس الصغير على الشاشات الكبيرة والآيباد */
-        @media (min-width: 500px) {
-            #user-name-overlay {
-                font-size: 16px !important; 
-            }
+        /* الأزرار تحت الصورة تلقائياً */
+        .controls { 
+            display: none; 
+            text-align: center; 
+            margin-top: 20px; 
+            width: 100%;
+            max-width: 450px;
         }
-        .controls { display: none; text-align: center; margin-top: 20px; }
+        
+        .btn-control {
+            width: 48%;
+            padding: 12px 10px;
+            font-size: 15px;
+            margin: 1%;
+            display: inline-block;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
 
     <div id="setup" class="input-box">
-        <h2 style="color:#013441;">معايدة عيد الأضحى 🌙</h2>
+        <h2 style="color:#013441; margin-top:0;">معايدة عيد الأضحى 🌙</h2>
+        <p style="color:#555;">فريق لطف التطوعي</p>
         <input type="text" id="nameInput" placeholder="اكتب الاسم هنا...">
-        <br><br>
+        <br>
         <button onclick="generate()">عرض البطاقة</button>
     </div>
 
-    <div id="capture-area">
-        <img src="bg.png" class="bg-img">
-        <div id="user-name-overlay"></div>
+    <div id="card-view" class="card-wrapper">
+        <div id="capture-area">
+            <img src="bg.png" class="bg-img">
+            <div id="user-name-overlay"></div>
+        </div>
     </div>
 
     <div id="controls-area" class="controls">
-        <button onclick="downloadCard()" style="background-color: #28a745;">تحميل البطاقة</button>
-        <button onclick="location.reload()" style="background-color: #6c757d;">اسم آخر</button>
+        <button class="btn-control" onclick="downloadCard()" style="background-color: #28a745;">تحميل البطاقة (صورة)</button>
+        <button class="btn-control" onclick="location.reload()" style="background-color: #6c757d;">اسم آخر</button>
     </div>
 
     <script>
@@ -62,25 +133,27 @@
             const name = document.getElementById('nameInput').value;
             if(name.trim() !== "") {
                 document.getElementById('setup').style.display = 'none';
-                document.getElementById('capture-area').style.display = 'block';
+                document.getElementById('card-view').style.display = 'block';
                 document.getElementById('controls-area').style.display = 'block';
                 document.getElementById('user-name-overlay').innerText = name;
+            } else {
+                alert("يرجى كتابة الاسم أولاً");
             }
         }
 
         function downloadCard() {
             const card = document.getElementById('capture-area');
+            
+            // سحب الصورة بدقة وثبات تام للموقع
             html2canvas(card, { 
                 useCORS: true, 
-                scale: 3,
-                onclone: (clonedDoc) => {
-                    const clonedName = clonedDoc.getElementById('user-name-overlay');
-                    clonedName.style.setProperty('font-size', '16px', 'important');
-                    clonedName.style.setProperty('color', '#000000', 'important');
-                }
+                scale: 3, // دقة عالية للطباعة والحفظ
+                logging: false,
+                windowWidth: card.scrollWidth,
+                windowHeight: card.scrollHeight
             }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'lutf-eid-card.png';
+                link.download = 'lutf-validation-card.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             });
