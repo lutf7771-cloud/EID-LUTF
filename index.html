@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تهنئة فريق لطف التطوعي</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -16,6 +17,7 @@
             margin: 0; 
             padding: 10px;
             box-sizing: border-box;
+            overflow-x: hidden;
         }
         
         .input-box { 
@@ -26,6 +28,7 @@
             text-align: center; 
             width: 100%; 
             max-width: 400px; 
+            z-index: 10;
         }
         
         input { 
@@ -50,12 +53,13 @@
             font-weight: bold; 
         }
         
-        /* حاوية البطاقة - أصبحت أكبر لتملأ الشاشة بشكل أفضل */
+        /* حاوية البطاقة - معبية الشاشة ومتناسقة */
         .card-wrapper {
             display: none;
             width: 100%;
-            max-width: 550px; /* تم تكبير الحجم الأقصى بناءً على طلبك */
+            max-width: 550px; 
             margin: 0 auto;
+            z-index: 10;
         }
 
         #capture-area { 
@@ -70,7 +74,7 @@
             box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
         
-        /* وزنية الاسم المضمونة في السنتر وفي وسط المربع تماماً دون شطحات */
+        /* وزنية الاسم المضمونة في وسط المربع تماماً دون شطحات وبخط أسود */
         #user-name-overlay {
             position: absolute !important;
             top: 70.3% !important; 
@@ -78,9 +82,9 @@
             transform: translate(-50%, -50%) !important;
             width: 50% !important;
             text-align: center !important;
-            font-size: 18px !important; /* مقاس الخط متناسق */
+            font-size: 18px !important; 
             font-weight: bold !important;
-            color: #000000 !important; /* أسود صريح */
+            color: #000000 !important; 
             white-space: nowrap !important;
             direction: rtl !important;
             z-index: 99 !important;
@@ -93,11 +97,12 @@
             margin-top: 20px; 
             width: 100%;
             max-width: 550px;
+            z-index: 10;
         }
         
         .btn-control {
             background-color: #6c757d;
-            width: 100%; /* الزر يأخذ العرض كامل بالأسفل بشكل مرتب */
+            width: 100%; 
             max-width: 200px;
             padding: 12px 10px;
             font-size: 15px;
@@ -139,9 +144,39 @@
                 document.getElementById('card-view').style.display = 'block';
                 document.getElementById('controls-area').style.display = 'block';
                 document.getElementById('user-name-overlay').innerText = name;
+                
+                // تشغيل تأثير الألعاب النارية الاحتفالية فوراً
+                launchFireworks();
             } else {
                 alert("يرجى كتابة الاسم أولاً");
             }
+        }
+
+        // دالة إطلاق الألعاب النارية بشكل متكرر ومبهج
+        function launchFireworks() {
+            var duration = 4 * 1000; // تستمر الألعاب النارية لمدة 4 ثوانٍ
+            var end = Date.now() + duration;
+
+            (function frame() {
+                // إطلاق من اليسار
+                confetti({
+                    particleCount: 4,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0, y: 0.8 }
+                });
+                // إطلاق من اليمين
+                confetti({
+                    particleCount: 4,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1, y: 0.8 }
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
         }
     </script>
 </body>
