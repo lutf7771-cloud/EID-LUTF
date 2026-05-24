@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تهنئة فريق لطف التطوعي</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -15,7 +14,7 @@
             align-items: center; 
             min-height: 100vh; 
             margin: 0; 
-            padding: 15px;
+            padding: 10px;
             box-sizing: border-box;
         }
         
@@ -51,11 +50,11 @@
             font-weight: bold; 
         }
         
-        /* حاوية البطاقة - معبية الشاشة ومتمركزة */
+        /* حاوية البطاقة - أصبحت أكبر لتملأ الشاشة بشكل أفضل */
         .card-wrapper {
             display: none;
             width: 100%;
-            max-width: 450px;
+            max-width: 550px; /* تم تكبير الحجم الأقصى بناءً على طلبك */
             margin: 0 auto;
         }
 
@@ -79,9 +78,9 @@
             transform: translate(-50%, -50%) !important;
             width: 50% !important;
             text-align: center !important;
-            font-size: 16px !important; /* مقاس ناعم وصغير للخط */
+            font-size: 18px !important; /* مقاس الخط متناسق */
             font-weight: bold !important;
-            color: #000000 !important; /* لون أسود صريح */
+            color: #000000 !important; /* أسود صريح */
             white-space: nowrap !important;
             direction: rtl !important;
             z-index: 99 !important;
@@ -93,16 +92,21 @@
             text-align: center; 
             margin-top: 20px; 
             width: 100%;
-            max-width: 450px;
+            max-width: 550px;
         }
         
         .btn-control {
-            width: 48%;
+            background-color: #6c757d;
+            width: 100%; /* الزر يأخذ العرض كامل بالأسفل بشكل مرتب */
+            max-width: 200px;
             padding: 12px 10px;
             font-size: 15px;
-            margin: 1%;
-            display: inline-block;
             box-sizing: border-box;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -124,8 +128,7 @@
     </div>
 
     <div id="controls-area" class="controls">
-        <button class="btn-control" onclick="downloadCard()" style="background-color: #28a745;">تحميل البطاقة (صورة)</button>
-        <button class="btn-control" onclick="location.reload()" style="background-color: #6c757d;">اسم آخر</button>
+        <button class="btn-control" onclick="location.reload()">إنشاء بطاقة أخرى</button>
     </div>
 
     <script>
@@ -139,24 +142,6 @@
             } else {
                 alert("يرجى كتابة الاسم أولاً");
             }
-        }
-
-        function downloadCard() {
-            const card = document.getElementById('capture-area');
-            
-            // سحب الصورة بدقة وثبات تام للموقع
-            html2canvas(card, { 
-                useCORS: true, 
-                scale: 3, // دقة عالية للطباعة والحفظ
-                logging: false,
-                windowWidth: card.scrollWidth,
-                windowHeight: card.scrollHeight
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'lutf-validation-card.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            });
         }
     </script>
 </body>
